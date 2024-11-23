@@ -97,7 +97,22 @@ const ShopContextProvider = (props) => {
     }
   };
 
-  const contextValue = { products, getTotalCartItems, cartItems, addToCart, removeFromCart, getTotalCartAmount };
+  const clearCart = () => {
+    setCartItems(getDefaultCart());
+    if (localStorage.getItem("auth-token")) {
+      fetch(`${backend_url}/clearcart`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/form-data',
+          'auth-token': `${localStorage.getItem("auth-token")}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(),
+      })
+    }
+  };
+
+  const contextValue = { products, getTotalCartItems, cartItems, addToCart, removeFromCart, getTotalCartAmount,clearCart };
   return (
     <ShopContext.Provider value={contextValue}>
       {props.children}

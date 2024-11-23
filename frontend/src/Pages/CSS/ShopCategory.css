@@ -68,3 +68,9 @@
         font-size: 13px;
     }
 }
+
+.selectsort{
+    border: none;
+    background-color: #fff;
+    padding: 0 1vw;
+}

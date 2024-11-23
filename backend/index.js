@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(cors());
 
 // Database Connection With MongoDB
-mongoose.connect("mongodb+srv://Myusername:admin@mycluster.stkyauo.mongodb.net/e-commerce?retryWrites=true&w=majority&appName=MyCluster");
+mongoose.connect("mongodb+srv://Myusername:^vvrulc2q@mycluster.stkyauo.mongodb.net/e-commerce");
 
 
 // paste your mongoDB Connection string above with password
@@ -245,4 +245,26 @@ app.post("/removeproduct", async (req, res) => {
 app.listen(port, (error) => {
   if (!error) console.log("Server Running on port " + port);
   else console.log("Error : ", error);
+});
+
+
+
+const adminUser = {
+  email: "admin@example.com",
+  password: "adminpassword"  
+};
+
+
+app.post('/logina', async (req, res) => {
+  console.log("Login");
+  let success = false;
+  
+  if (req.body.email === adminUser.email && req.body.password === adminUser.password) {
+    const data = { user: { role: 'admin' } };
+    success = true;
+    const token = jwt.sign(data, 'secret_ecom');
+    res.json({ success, token });
+  } else {
+    return res.status(400).json({ success: success, errors: "Please try with correct email/password" });
+  }
 });
